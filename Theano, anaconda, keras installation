@@ -16,7 +16,70 @@
 - Update
  
     pip install --upgrade --no-deps theano
+    
+- script to check
+write gpu_check.py
+
+from theano import function, config, shared, sandbox
+import theano.tensor as T
+import numpy
+import time
+ 
+vlen = 10 * 30 * 768  # 10 x #cores x # threads per core
+iters = 1000
+ 
+rng = numpy.random.RandomState(22)
+x = shared(numpy.asarray(rng.rand(vlen), config.floatX))
+f = function([], T.exp(x))
+print(f.maker.fgraph.toposort())
+t0 = time.time()
+for i in range(iters):
+    r = f()
+t1 = time.time()
+print("Looping %d times took %f seconds" % (iters, t1 - t0))
+print("Result is %s" % (r,))
+if numpy.any([isinstance(x.op, T.Elemwise) for x in f.maker.fgraph.toposort()]):
+    print('Used the cpu')
+else:
+    print('Used the gpu')
+    
+run python gpu_check.py
   
+  if it shows using cpu, then do the following
+  
+  create theanorc
+  cd
+nano .theanorc
+
+copy this
+
+[blas]
+ldflags =
+ 
+[global]
+floatX = float32
+device = gpu
+ 
+# By default the compiled files were being written to my local network drive.
+# Since I have limited space on this drive (on a school's network),
+# we can change the path to compile the files on the local machine.
+# You will have to create the directories and modify according to where you
+# want to install the files.
+# Uncomment if you want to change the default path to your own.
+# base_compiledir = /local-scratch/jer/theano/
+ 
+[nvcc]
+fastmath = True
+ 
+[gcc]
+cxxflags = -ID:\MinGW\include
+ 
+[cuda]
+# Set to where the cuda drivers are installed.
+# You might have to change this depending where your cuda driver/what version is installed.
+root=/usr/local/cuda-6.5/
+
+and heck again
 - Fixing the Broken ROS packages
  
     conda install rospkg
