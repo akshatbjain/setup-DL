@@ -7,10 +7,18 @@
 ##   none
 ##
 
-echo "$(tput setaf 1)download theano$(tput sgr0)"
-cd
-wget https://repo.continuum.io/archive/Anaconda2-4.1.1-Linux-x86_64.sh 
+#check if anaconda2 is already downloaded
+if [ -e $"Anaconda2-4.1.1-Linux-x86_64.sh " ]; then  
+  echo "$(tput setaf 1)anaconda2 already exists, using it$(tput sgr0)"
+else
+  echo "$(tput setaf 1)download anaconda$(tput sgr0)"
+  cd
+  wget https://repo.continuum.io/archive/Anaconda2-4.1.1-Linux-x86_64.sh 
+fi
+
+echo "$(tput setaf 1)installing anaconda$(tput sgr0)"
 bash Anaconda2-4.1.1-Linux-x86_64.sh
+source ~/.bashrc
 
 echo "$(tput setaf 1)update conda and install theano$(tput sgr0)"
 conda update conda
@@ -21,7 +29,14 @@ conda install --channel https://conda.anaconda.org/KEHANG keras
 
 echo "$(tput setaf 1)update theano$(tput sgr0)"
 pip install --upgrade --no-deps theano
-    
+
+#check if the script already exists
+cd
+if [ -e $"gpu_check.py " ]; then  
+  echo "$(tput setaf 1)deleting the existing setup file$(tput sgr0)"
+  rm -rf gpu_check.py
+fi
+
 echo "$(tput setaf 1)generating script to test gpu $(tput sgr0)"
 echo "
 from theano import function, config, shared, sandbox
@@ -40,8 +55,8 @@ t0 = time.time()
 for i in range(iters):
     r = f()
 t1 = time.time()
-print("Looping %d times took %f seconds" % (iters, t1 - t0))
-print("Result is %s" % (r,))
+#print("Looping %d times took %f seconds" % (iters, t1 - t0))
+#print("Result is %s" % (r,))
 if numpy.any([isinstance(x.op, T.Elemwise) for x in f.maker.fgraph.toposort()]):
     print('Used the cpu')
 else:
@@ -52,10 +67,11 @@ OUTPUT="$(python gpu_check.py)"
 echo $OUTPUT  
 
 if  [ "$OUTPUT" == 'Used the cpu' ]; then  
-
-echo "$(tput setaf 1)create theanorc$(tput sgr0)"
-cd
-echo "
+  #check if the script already exists
+  cd
+  echo "$(tput setaf 1)create theanorc$(tput sgr0)"
+  cd
+  echo "
 [blas]
 ldflags =
  
@@ -81,5 +97,5 @@ cxxflags = -ID:\MinGW\include
 # Set to where the cuda drivers are installed.
 # You might have to change this depending where your cuda driver/what version is installed.
 root=/usr/local/cuda-8.0/
-" >> theano.rc
+" >> .theanorc
 fi
