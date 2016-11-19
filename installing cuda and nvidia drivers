@@ -19,8 +19,10 @@ accept EULA
 yes for nvidia driver
 no for nvidia xconf
 yes for cuda
+yes for enter tool kit location
 yes to symbolic link
 yes to cuda samples
+yes for enter cuda sample locations
 
 11. Set Environment path variables:
 '$ export PATH=/usr/local/cuda-8.0/bin:$PATH'
