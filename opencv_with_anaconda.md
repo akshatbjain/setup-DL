@@ -25,3 +25,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
 7.make and install                      
 `make`  
 `install`
+
+**Note:**     
+  make sure to install lib4l   
+  `sudo apt-get install libv4l-dev`
