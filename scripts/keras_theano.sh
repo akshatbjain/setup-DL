@@ -47,10 +47,11 @@ if numpy.any([isinstance(x.op, T.Elemwise) for x in f.maker.fgraph.toposort()]):
 else:
     print('Used the gpu')
 " >> gpu_check.py
-    
-python gpu_check.py
   
-#if it shows using cpu, then do the following 
+OUTPUT="$(python gpu_check.py)"
+echo $OUTPUT  
+
+if  [ "$OUTPUT" == 'Used the cpu' ]; then  
 
 echo "$(tput setaf 1)create theanorc$(tput sgr0)"
 cd
@@ -81,4 +82,4 @@ cxxflags = -ID:\MinGW\include
 # You might have to change this depending where your cuda driver/what version is installed.
 root=/usr/local/cuda-8.0/
 " >> theano.rc
-
+fi
