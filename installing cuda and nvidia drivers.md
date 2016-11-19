@@ -1,8 +1,8 @@
 ## Installing Nvidia driver and Cuda
 ###### This is specifically done for *Nvidia-GTX960* graphic card on *lenovoY700*
 
-1. download the cuda from here [link](https://developer.nvidia.com/cuda-downloads)
-2. Install build-essential       
+1.download the cuda from here [link](https://developer.nvidia.com/cuda-downloads)                
+2.Install build-essential                    
 `sudo apt-get install build-essential`
 3. black list nouveau, create the file /etc/modprobe.d/blacklist-nouveau.conf               
 `vi /etc/modprobe.d/blacklist-nouveau.conf`
@@ -23,17 +23,17 @@ Then `sudo update-initramfs -u`
 10.run cuda.run with out opengl                      
 `sudo bash cuda-7.0.28_linux.run --no-opengl-libs`                     
 
-> **while installing:**                      
-> *accept* EULA agreement                            
-> *yes* for installing nvidia driver                
-> *No* for changin nvidia xconf                 
-> *yes* for installing cuda        
-> *yes* for enter tool kit location (will use default location, or change it)                           
-> *yes* for symbolic link                            
-> *yes* for installing cuda samples                                  
-> *yes* for enter cuda sample locations (will use default location, or change it)                                            
+ > **while installing:**                      
+ > *accept* EULA agreement                            
+ > *yes* for installing nvidia driver                
+ > *No* for changin nvidia xconf                 
+ > *yes* for installing cuda        
+ > *yes* for enter tool kit location (will use default location, or change it)                           
+ > *yes* for symbolic link                            
+ > *yes* for installing cuda samples                                  
+ > *yes* for enter cuda sample locations (will use default location, or change it)                                            
 
-11. Set Environment path variables:                
+11.Set Environment path variables:                
 `export PATH=/usr/local/cuda-8.0/bin:$PATH`         
 `export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH`                
 12. Verify the driver version:        
