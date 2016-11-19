@@ -8,7 +8,8 @@
 ##
 
 #check if anaconda2 is already downloaded
-if [ -e $"Anaconda2-4.1.1-Linux-x86_64.sh " ]; then  
+cd
+if [ -f $'Anaconda2-4.1.1-Linux-x86_64.sh' ]; then  
   echo "$(tput setaf 1)anaconda2 already exists, using it$(tput sgr0)"
 else
   echo "$(tput setaf 1)download anaconda$(tput sgr0)"
@@ -32,7 +33,7 @@ pip install --upgrade --no-deps theano
 
 #check if the script already exists
 cd
-if [ -e $"gpu_check.py " ]; then  
+if [ -f $'gpu_check.py' ]; then  
   echo "$(tput setaf 1)deleting the existing setup file$(tput sgr0)"
   rm -rf gpu_check.py
 fi
@@ -50,7 +51,7 @@ iters = 1000
 rng = numpy.random.RandomState(22)
 x = shared(numpy.asarray(rng.rand(vlen), config.floatX))
 f = function([], T.exp(x))
-print(f.maker.fgraph.toposort())
+#print(f.maker.fgraph.toposort())
 t0 = time.time()
 for i in range(iters):
     r = f()
@@ -67,7 +68,6 @@ OUTPUT="$(python gpu_check.py)"
 echo $OUTPUT  
 
 if  [ "$OUTPUT" == 'Used the cpu' ]; then  
-  #check if the script already exists
   cd
   echo "$(tput setaf 1)create theanorc$(tput sgr0)"
   cd
@@ -99,3 +99,6 @@ cxxflags = -ID:\MinGW\include
 root=/usr/local/cuda-8.0/
 " >> .theanorc
 fi
+
+OUTPUT="$(python gpu_check.py)"
+echo $OUTPUT  
