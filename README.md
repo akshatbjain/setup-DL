@@ -8,5 +8,5 @@ run using
 This script should download the anaconda and setup theras, theano for using it with machine learning.      
 
 ***prerequisites:***    
-The drivers for your graphic card should be setup before this, check [installing nvidia drivers](installing cuda and nvidia drivers)
+The drivers for your graphic card should be setup before this, check [installing nvidia drivers](installing cuda and nvidia drivers.md)
 
