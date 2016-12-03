@@ -17,6 +17,10 @@ Then `sudo update-initramfs -u`
 4.reboot           
 `sudo reboot`                  
 
+** The above steps can be run using the below script:**
+`bash nvidia_cuda.sh`
+after reboot follow the below instructions
+
 5.login                
 
 6.`ctrl+alt+f1` and login          
