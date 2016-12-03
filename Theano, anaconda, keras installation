@@ -85,3 +85,4 @@ and heck again
     conda install rospkg
     pip install catkin-pkg
     conda install wxpython
+    pip install em
